@@ -17,24 +17,24 @@ US1: As a customer, I want to see today's menu with prices so that I can decide 
 US - User Story
 -->
 
-### Feature: 
-US1:
+### Feature: Homepage and App Page
+US1: As a student, I want to view the homepage to see the introduction and featured content.
 
-US2:
+US2: As a student, I want to navigate through the website sections to access different pages.
 
-US3:
+US3: As a student, I want to select HTML, CSS, or JavaScript modules to access their lessons.
 
-### Feature: 
-US1:
+### Feature: Code Playground, Quizzes and Challenges
+US1: As a student, I want to write and edit code to practice programming.
 
-US2:
+US2: As a student, I want to run my code to view its output.
 
-US3:
+US3: As a student, I want to answer quizzes and coding challenges to test my knowledge.
 
-### Feature:
-US1:
+### Feature: Student Profile
+US1: As a student, I want to view my completed lessons to track my learning progress.
 
-US2:
+US2: As a student, I want to view my quiz scores to check my performance.
 
-US3:
+US3: As a student, I want to view my earned badges to track my achievements.
 
