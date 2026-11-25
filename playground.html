@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeCode | Code Playground</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav aria-label="Main Navigation">
+      <a href="index.html">Home</a>
+      <a href="app.html">Lessons</a>
+      <a href="playground.html">Playground</a>
+      <a href="quizzes.html" data-available="false">Quizzes</a>
+      <a href="profile.html" data-available="false">Profile</a>
+    </nav>
+  </header>
+
+  <div id="nav-error" role="alert" hidden></div>
+
+  <main>
+    <h1>Code Playground</h1>
+    <p>Write and edit your HTML, CSS, or JavaScript code below.</p>
+
+    <section class="editor-card">
+      <label for="code-editor" class="sr-only">Write your code</label>
+      <textarea id="code-editor" rows="12" placeholder="Write your HTML, CSS, or JavaScript here..."><h1>Hello, CodeCode!</h1>
+<p>I am practicing my code in the playground.</p></textarea>
+      <div class="editor-actions">
+        <button type="button" id="run-code-btn">Run Code</button>
+        <button type="button" id="reset-code-btn">Reset</button>
+      </div>
+    </section>
+
+    <section class="output-card">
+      <h2>Output</h2>
+      <div id="playground-message" role="alert">Ready for execution.</div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

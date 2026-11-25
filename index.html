@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Name</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CODECODE | Learn Web Development</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+  <header>
+    <nav aria-label="Main Navigation">
+      <a href="index.html">Home</a>
+      <a href="app.html">Lessons</a>
+      <a href="playground.html">Playground</a>
+      <a href="quizzes.html" data-available="false">Quizzes</a>
+      <a href="profile.html" data-available="false">Profile</a>
+    </nav>
+  </header>
+
+<div id="nav-error" role="alert" hidden></div>
+
+  <main>
+    <section id="hero-intro">
+      <h1>Welcome to CODECODE</h1>
+      <p>Learn HTML, CSS, and JavaScript through organized lessons, interactive quizzes, and hands-on coding challenges.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>

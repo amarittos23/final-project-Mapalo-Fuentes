@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CODECODE | Learning Modules</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav aria-label="Main Navigation">
+      <a href="index.html">Home</a>
+      <a href="app.html">Lessons</a>
+      <a href="playground.html">Playground</a>
+      <a href="quizzes.html" data-available="false">Quizzes</a>
+      <a href="profile.html" data-available="false">Profile</a>
+    </nav>
+  </header>
+<div id="nav-error" role="alert" hidden></div>
+  <main>
+    <h1>Learning Modules</h1>
+    <p>Select HTML, CSS, or JavaScript to start learning.</p>
+    <div id="module-selector" role="group" aria-label="Select programming language">
+      <button type="button" class="module-btn" data-lang="html">HTML</button>
+      <button type="button" class="module-btn" data-lang="css">CSS</button>
+      <button type="button" class="module-btn" data-lang="javascript">JavaScript</button>
+    </div>
+
+    <section id="lessons-container" aria-live="polite">
+      <p>Choose a language above to view its lessons.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
