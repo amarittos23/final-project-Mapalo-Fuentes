@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeCode - Student Profile</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav aria-label="Main Navigation">
+      <a href="index.html" class="brand">CODECODE</a>
+      <ul class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="app.html">Lessons</a>
+        <a href="playground.html">Playground</a>
+        <a href="quizzes.html">Quizzes</a>
+        <a href="profile.html" aria-current="page">Profile</a>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="nav-error" role="alert"></div>
+
+  <main>
+    <h1>Student Profile</h1>
+    <p>Track your learning progress and review the lessons you have finished.</p>
+    <section id="completed-lessons-section" class="profile-card" aria-labelledby="completed-heading">
+      <h2 id="completed-heading">Completed Lessons</h2>
+      <div id="completed-lessons-list" aria-live="polite"></div>
+    </section>
+    <section id="quiz-scores-section" class="profile-card" aria-labelledby="scores-heading">
+      <h2 id="scores-heading">Quiz Scores</h2>
+      <div id="quiz-scores-list" aria-live="polite"></div>
+    </section>
+    <section id="badges-section" class="profile-card" aria-labelledby="badges-heading">
+      <h2 id="badges-heading">Earned Badges</h2>
+      <div id="badges-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

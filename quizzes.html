@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeCode - Quizzes & Challenges</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav aria-label="Main Navigation">
+      <a href="index.html" class="brand">CODECODE</a>
+      <ul class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="app.html">Lessons</a>
+        <a href="playground.html">Playground</a>
+        <a href="quizzes.html" aria-current="page">Quizzes</a>
+        <a href="profile.html">Profile</a>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="nav-error" role="alert"></div>
+
+  <main>
+    <h1>Quizzes &amp; Coding Challenges</h1>
+    <p>Select a quiz or coding challenge below to test what you have learned.</p>
+
+    <section id="activity-list" aria-label="Available Quizzes and Challenges"></section>
+
+    <section id="activity-view" class="quiz-card" aria-live="polite">
+      <p>Choose an activity above to view its questions or coding task.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

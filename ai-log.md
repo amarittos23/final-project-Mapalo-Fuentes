@@ -64,3 +64,51 @@ Minimum of 5 meaningful AI logs.
 - **What I changed or rejected, and why:** I kept the suggested code and tested the empty JavaScript module first to make sure the fallback message worked before styling.
 - **How I tested it:** I opened app.html in my browser and clicked HTML and CSS to verify their lesson cards loaded properly. I also clicked JavaScript to confirm the "No lessons are available for this module yet." message appeared.
 - **What I learned:** I learned how to organize lesson data in a JavaScript object, read custom data-lang attributes using dataset, highlight the active button, and handle empty lesson lists cleanly.
+
+## Entry 4: [11/25/2026]
+- **User story:** US1: As a student, I want to write and edit code to practice programming.
+- **What I asked:** I asked for a step-by-step plan and code to create the Code Playground page where students can write code and see a warning message if they try to run empty code.
+- **What the AI suggested:** Creating playground.html with a textarea code editor, Run Code and Reset buttons, and an Output card, enabling the Playground link in the navigation bar, checking for empty input in script.js using .trim(), and styling the dark code editor and cards in styles.css.
+- **What I changed or rejected, and why:** Kept the suggested layout and added a Reset button to clear the editor easily while testing.
+- **How I tested it:** I opened playground.html, typed HTML code into the editor to verify it appeared properly (AC4.1), and clicked Run Code while the editor was empty to verify the warning message appeared (AC4.2). I also tested the Reset button and checked the layout on mobile width.
+- **What I learned:** I learned how to build an accessible code editor using textarea, validate empty user input in JavaScript with .trim(), and style a dark code editor box with CSS.
+
+## Entry 5: [11/25/2026]
+- **User story:** US5: As a student, I want to run my code to view its output.
+- **What I asked:** I shared US5 and its acceptance criteria (AC5.1 and AC5.2) and asked for a step-by-step plan and code to run the student's code and show errors when the code is broken.
+- **What the AI suggested:** Adding a sandboxed iframe in playground.html, writing the student's code to iframe.srcdoc in script.js, catching JavaScript runtime errors with window.onerror and postMessage to display an error message, clearing the iframe on Reset, and styling #code-output in styles.css.
+- **What I changed or rejected, and why:** Kept the suggested implementation and tested both valid HTML/CSS output and broken JavaScript code.
+- **How I tested it:** I opened playground.html, clicked Run Code with valid HTML to verify the live output rendered inside the preview frame (AC5.1), and tested broken JavaScript like `<script>console.log(x);</script>` to confirm the red error message appeared (AC5.2).
+- **What I learned:** I learned how to safely preview user HTML, CSS, and JavaScript using a sandboxed iframe with srcdoc, and how to pass error messages from an iframe back to the parent page using window.onerror and postMessage.
+
+## Entry 6: [11/25/2026]
+- **User story:** US3 (AC6.1–AC6.2): As a student, I want to answer quizzes and coding challenges to test my knowledge.
+- **What I asked:** I shared the user story and acceptance criteria (AC6.1 and AC6.2), asked for a step-by-step plan and code to build the Quizzes and Challenges page, and later asked to hide an empty red alert box and expand the quiz to 10 multiple-choice questions.
+- **What the AI suggested:** Creating quizzes.html with the shared navigation bar, removing data-available="false" from the Quizzes links in existing pages, adding an activitiesData array in script.js with a 10-question HTML Basics Quiz and a CSS Color Challenge, dynamically rendering each question with individual feedback, hiding #nav-error when empty using CSS :empty, and styling the quiz cards and question blocks in styles.css.
+- **What I changed or rejected, and why:** I requested upgrading the quiz from 1 question to 10 questions so the assessment felt more complete, added #nav-error:empty { display: none; } to remove an empty red box on page load, and fixed a closing brace placement in script.js so renderActivities() ran outside openActivity().
+- **How I tested it:** I opened quizzes.html, clicked the HTML Basics Quiz to verify all 10 questions displayed and checked answers individually, tested the CSS Color Challenge input and feedback (AC6.1), and temporarily emptied activitiesData to confirm the "No quizzes or challenges are available yet." message appeared (AC6.2).
+- **What I learned:** I learned how to loop through an array of multiple quiz questions with independent feedback elements, hide empty alert containers using the CSS :empty pseudo-class, and debug JavaScript scope issues caused by misplaced closing braces.
+
+## Entry 7: [11/25/2026]
+- **User story:** Student Profile US1 (AC7.1–AC7.2): As a student, I want to view my completed lessons to track my learning progress.
+- **What I asked:** I shared the user story and acceptance criteria (AC7.1 and AC7.2) and asked for a step-by-step plan and code to build the Student Profile completed lessons section.
+- **What the AI suggested:** Creating profile.html with the shared navigation bar, removing data-available="false" from the Profile links in all existing pages, adding a Completed Lessons section in profile.html, using localStorage in script.js to save completed lessons when a student clicks "Mark as Completed" on app.html, rendering either the completed lesson list or the empty-state message on profile.html, and styling the profile card and completed badges in styles.css.
+- **What I changed or rejected, and why:** Kept the suggested localStorage design and consolidated script.js cleanly so the "Mark as Completed" button renders directly inside each lesson card on app.html without duplicate code blocks.
+- **How I tested it:** I first opened profile.html with empty localStorage to verify the "You have not completed any lessons yet." message appeared (AC7.2), then went to app.html, clicked "Mark as Completed" on HTML Basics, and returned to profile.html to confirm "✓ HTML Basics" appeared in the Completed Lessons section (AC7.1).
+- **What I learned:** I learned how to persist user progress across multiple HTML pages using localStorage with JSON.stringify and JSON.parse, and how to update button states with disabled attributes once a task is completed.
+
+## Entry 8: [11/25/2026]
+- **User story:** Student Profile US2 (AC8.1–AC8.2): As a student, I want to view my quiz scores to check my performance.
+- **What I asked:** I shared the user story and acceptance criteria (AC8.1 and AC8.2) and asked for a step-by-step plan and code to record and display quiz scores on the Student Profile page.
+- **What the AI suggested:** Adding a Quiz Scores section in profile.html, updating openActivity() in script.js to track the student's selected options and add a "Submit Quiz & Save Score" button, saving scores to localStorage via saveQuizScore(), rendering either the recorded scores list or the empty-state message on profile.html via renderQuizScores(), and styling the score badges in styles.css.
+- **What I changed or rejected, and why:** Kept the suggested localStorage implementation so quiz scores persist across pages and update cleanly when retaking a quiz.
+- **How I tested it:** I first opened profile.html with no recorded quiz scores to confirm "No quiz scores are available yet." appeared (AC8.2), then went to quizzes.html, completed the 10-question HTML Basics Quiz, clicked "Submit Quiz & Save Score", and returned to profile.html to verify the recorded score appeared in the Quiz Scores section (AC8.1).
+- **What I learned:** I learned how to track user selections across multiple quiz questions in an object, calculate a final score on submission, and store structured score objects in localStorage.
+
+## Entry 9: [11/25/2026]
+- **User story:** Student Profile US3 (AC9.1–AC9.2): As a student, I want to view my earned badges to track my achievements.
+- **What I asked:** I shared the user story and acceptance criteria (AC9.1 and AC9.2) and asked for a step-by-step plan and code to build the Earned Badges section on the Student Profile page.
+- **What the AI suggested:** Adding an Earned Badges section in profile.html, writing getEarnedBadges() in script.js to check localStorage progress for milestones (First Lesson Completed, Quiz Taker, and HTML Master), rendering either the badge list or the empty-state message via renderBadges(), and styling the gold badge cards in styles.css.
+- **What I changed or rejected, and why:** Kept the suggested milestone-based badge logic and verified that the complete script.js file had no truncated functions.
+- **How I tested it:** I cleared localStorage and opened profile.html to verify "No badges have been earned yet." appeared (AC9.2), then completed a lesson and submitted a quiz before reopening profile.html to confirm the earned badges appeared in the Earned Badges section (AC9.1).
+- **What I learned:** I learned how to derive dynamic achievement badges from existing localStorage records without needing separate storage keys, and how to use Array.prototype.some() to check if any quiz score meets a threshold.
