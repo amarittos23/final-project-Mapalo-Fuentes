@@ -112,3 +112,11 @@ Minimum of 5 meaningful AI logs.
 - **What I changed or rejected, and why:** Kept the suggested milestone-based badge logic and verified that the complete script.js file had no truncated functions.
 - **How I tested it:** I cleared localStorage and opened profile.html to verify "No badges have been earned yet." appeared (AC9.2), then completed a lesson and submitted a quiz before reopening profile.html to confirm the earned badges appeared in the Earned Badges section (AC9.1).
 - **What I learned:** I learned how to derive dynamic achievement badges from existing localStorage records without needing separate storage keys, and how to use Array.prototype.some() to check if any quiz score meets a threshold.
+
+## Entry 10: Nov 27, 2026
+- **User story:** US1 — Explore the learning homepage; US2 — Move between learning areas; US8 — Choose a comfortable display mode.
+- **What I asked:** I asked ChatGPT to make CODECODE more interactive and visually engaging using `#0B1026`, `#1F4BFF`, `#00E5FF`, and `#F5F6FA`, and to revise the user stories, acceptance criteria, AI log, and README to reflect the improvements.
+- **What the AI suggested:** A shared visual design system, a stronger homepage with direct links to the main learning areas, responsive cards and controls, and a light/dark display-mode preference saved in the browser.
+- **What I changed or rejected, and why:** The updated project keeps the original CODECODE name, pages, lesson content, quiz, challenge, profile, and browser-based progress approach. I added a new display-mode story and matching test criteria instead of claiming that features such as accounts or cross-device syncing exist.
+- **How I tested it:** The files have been updated, but browser testing has not yet been completed. Before marking this entry as finished, open `index.html`, test the navigation and theme toggle on each page, reload to check theme persistence, and check the layout at desktop and mobile widths. Record the actual pass/fail results here after testing.
+- **What I learned:** A shared CSS variable system makes it easier to keep multiple pages visually consistent. Browser `localStorage` can remember a theme choice between pages, but it does not provide account-based or cross-device synchronization.

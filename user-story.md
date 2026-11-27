@@ -1,40 +1,35 @@
-# User Stories
-<!--
-A user story describes ONE thing a user wants to do, from their point of view.
-Write 3–5 stories using this format:
+# CODECODE — User Stories
 
-As a [type of user], I want to [do something] so that [I get this benefit].
+These stories describe the improved experience for beginner web-development students.
 
-Tips:
-- Give each story an ID (US1, US2...). You'll use these IDs in acceptance-criteria.md.
-- One action per story. If you see "and" in the middle, split it into two stories.
-- The "so that" part is the reason. If you can't think of one, you may not need that feature.
-- Put your most important story first. That's the one you'll build first.
+## Feature 1: Discover and navigate CODECODE
 
-Example:
-US1: As a customer, I want to see today's menu with prices so that I can decide what to order.
+**US1 — Explore the learning homepage**  
+As a beginner student, I want a welcoming homepage with clear learning paths and quick actions so that I can decide what to study next.
 
-US - User Story
--->
+**US2 — Move between learning areas**  
+As a student, I want consistent navigation and a clear indication of my current page so that I can move between lessons, the playground, quizzes, and my profile without getting lost.
 
-### Feature: Homepage and App Page
-US1: As a student, I want to view the homepage to see the introduction and featured content.
+## Feature 2: Learn and practice
 
-US2: As a student, I want to navigate through the website sections to access different pages.
+**US3 — Choose a programming language**  
+As a student, I want to switch between HTML, CSS, and JavaScript lessons so that I can focus on the topic I want to learn.
 
-US3: As a student, I want to select HTML, CSS, or JavaScript modules to access their lessons.
+**US4 — Track lesson completion**  
+As a student, I want to mark lessons as completed and see that status when I return so that I can keep track of my learning.
 
-### Feature: Code Playground, Quizzes and Challenges
-US1: As a student, I want to write and edit code to practice programming.
+**US5 — Experiment in the code playground**  
+As a student, I want to write, run, preview, and reset code so that I can experiment and immediately see the result.
 
-US2: As a student, I want to run my code to view its output.
+## Feature 3: Check knowledge and progress
 
-US3: As a student, I want to answer quizzes and coding challenges to test my knowledge.
+**US6 — Take interactive quizzes and challenges**  
+As a student, I want to answer questions, receive feedback, and submit my quiz so that I can check what I understand.
 
-### Feature: Student Profile
-US1: As a student, I want to view my completed lessons to track my learning progress.
+**US7 — Review my learning progress**  
+As a student, I want to see completed lessons, saved quiz scores, and earned badges in one profile so that I can recognize my progress.
 
-US2: As a student, I want to view my quiz scores to check my performance.
+## Feature 4: Personalize the experience
 
-US3: As a student, I want to view my earned badges to track my achievements.
-
+**US8 — Choose a comfortable display mode**  
+As a student, I want to switch between the default dark-blue look and a light display mode so that I can use the platform comfortably in different lighting.

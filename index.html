@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B1026">
   <title>CODECODE | Learn Web Development</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <nav aria-label="Main Navigation">
-      <a href="index.html" class="brand">CODECODE</a>
+      <a href="index.html" class="brand" aria-label="CODECODE home">CODECODE</a>
       <a href="index.html" aria-current="page">Home</a>
       <a href="app.html">Lessons</a>
       <a href="playground.html">Playground</a>
@@ -17,16 +18,49 @@
       <a href="profile.html">Profile</a>
     </nav>
   </header>
-
-<div id="nav-error" role="alert" hidden></div>
-
+  <div id="nav-error" role="alert" hidden></div>
   <main>
     <section id="hero-intro">
-      <h1>Welcome to CODECODE</h1>
-      <p>Learn HTML, CSS, and JavaScript through organized lessons, interactive quizzes, and hands-on coding challenges.</p>
+      <p class="eyebrow">YOUR FRONTEND JOURNEY STARTS HERE</p>
+      <h1>Think it. <span>Code it.</span> Make it real.</h1>
+      <p>Build your web-development skills one small win at a time. Learn HTML, CSS, and JavaScript, experiment in the playground, and watch your progress grow.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="app.html" style="text-decoration:none">Explore lessons&nbsp; →</a>
+        <a class="btn-secondary" href="playground.html" style="text-decoration:none">Open playground</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="path-heading" style="margin-top:38px">
+      <p class="eyebrow">PICK YOUR NEXT STEP</p>
+      <h2 id="path-heading">Your learning space</h2>
+      <div class="feature-grid">
+        <a class="feature-card" href="app.html">
+          <span class="feature-icon" aria-hidden="true">📘</span>
+          <h2>Learning modules</h2>
+          <p>Explore HTML, CSS, and JavaScript topics at your own pace.</p>
+        </a>
+        <a class="feature-card" href="playground.html">
+          <span class="feature-icon" aria-hidden="true">⌨️</span>
+          <h2>Code playground</h2>
+          <p>Try an idea, run your code, and see your work come to life.</p>
+        </a>
+        <a class="feature-card" href="quizzes.html">
+          <span class="feature-icon" aria-hidden="true">🧠</span>
+          <h2>Quizzes & challenges</h2>
+          <p>Check what you know and practice solving coding problems.</p>
+        </a>
+        <a class="feature-card" href="profile.html">
+          <span class="feature-icon" aria-hidden="true">🏆</span>
+          <h2>Your progress</h2>
+          <p>Look back at completed lessons, quiz scores, and badges.</p>
+        </a>
+      </div>
+    </section>
+    <section style="margin-top:32px; padding:22px; border:1px solid var(--border); border-radius:18px; background:var(--surface)">
+      <h2>Small steps. Real progress.</h2>
+      <p>Start with one lesson, test what you learned, and come back tomorrow for another challenge. Every line of code is a step forward.</p>
     </section>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>

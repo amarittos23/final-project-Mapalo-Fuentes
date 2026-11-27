@@ -471,3 +471,37 @@ function renderBadges() {
 }
 
 renderBadges();
+
+// Shared display-mode control. The site remains usable if localStorage is blocked.
+(function setupThemeToggle() {
+  const nav = document.querySelector('header nav');
+  if (!nav) return;
+
+  let savedTheme = null;
+  try { savedTheme = localStorage.getItem('codecode_theme'); } catch (error) {}
+  if (savedTheme === 'light') document.body.classList.add('light-theme');
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.id = 'theme-toggle';
+  toggle.setAttribute('aria-pressed', String(document.body.classList.contains('light-theme')));
+
+  function updateLabel() {
+    const isLight = document.body.classList.contains('light-theme');
+    toggle.textContent = isLight ? '☾ Dark mode' : '☀ Light mode';
+    toggle.setAttribute('aria-pressed', String(isLight));
+    toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+  }
+
+  toggle.addEventListener('click', function () {
+    document.body.classList.toggle('light-theme');
+    try {
+      localStorage.setItem('codecode_theme',
+        document.body.classList.contains('light-theme') ? 'light' : 'dark');
+    } catch (error) {}
+    updateLabel();
+  });
+
+  nav.appendChild(toggle);
+  updateLabel();
+})();
