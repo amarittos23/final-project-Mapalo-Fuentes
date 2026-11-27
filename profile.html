@@ -1,44 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodeCode - Student Profile</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header>
-    <nav aria-label="Main Navigation">
-      <a href="index.html" class="brand">CODECODE</a>
-      <ul class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="app.html">Lessons</a>
-        <a href="playground.html">Playground</a>
-        <a href="quizzes.html">Quizzes</a>
-        <a href="profile.html" aria-current="page">Profile</a>
-      </ul>
-    </nav>
-  </header>
-
-  <div id="nav-error" role="alert"></div>
-
-  <main>
-    <h1>Student Profile</h1>
-    <p>Track your learning progress and review the lessons you have finished.</p>
-    <section id="completed-lessons-section" class="profile-card" aria-labelledby="completed-heading">
-      <h2 id="completed-heading">Completed Lessons</h2>
-      <div id="completed-lessons-list" aria-live="polite"></div>
-    </section>
-    <section id="quiz-scores-section" class="profile-card" aria-labelledby="scores-heading">
-      <h2 id="scores-heading">Quiz Scores</h2>
-      <div id="quiz-scores-list" aria-live="polite"></div>
-    </section>
-    <section id="badges-section" class="profile-card" aria-labelledby="badges-heading">
-      <h2 id="badges-heading">Earned Badges</h2>
-      <div id="badges-list" aria-live="polite"></div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0B1026"><title>CODECODE | Student Profile</title><link rel="stylesheet" href="styles.css"></head>
+<body><header><nav aria-label="Main Navigation"><a href="index.html" class="brand">CODECODE</a><a href="index.html">Home</a><a href="app.html">Lessons</a><a href="playground.html">Playground</a><a href="quizzes.html">Quizzes</a><a href="profile.html" aria-current="page">Profile</a></nav></header>
+<main><section class="page-heading"><p class="eyebrow">YOUR CODING JOURNEY</p><h1>Student profile</h1><p>See what you have learned, celebrate your milestones, and choose your next step.</p></section>
+<section class="profile-hero"><div class="avatar" aria-hidden="true">👩‍💻</div><div class="profile-intro"><p class="eyebrow">LEARNER CARD</p><h2 id="profile-name-display">CODECODE Learner</h2><p id="profile-motto">Every expert started as a beginner.</p></div><button type="button" class="btn-secondary" id="edit-name-btn">Edit display name</button></section>
+<section id="profile-stats" class="profile-stats" aria-live="polite"></section>
+<section class="profile-card"><div class="section-row"><div><p class="eyebrow">YOUR PROGRESS</p><h2>Learning progress</h2></div><span id="progress-label" class="progress-label">0%</span></div><div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div><p class="muted" id="progress-caption">Complete lessons and quizzes to build your progress.</p></section>
+<div class="profile-grid"><section class="profile-card"><h2>📚 Completed lessons</h2><div id="completed-lessons-list" aria-live="polite"></div></section><section class="profile-card"><h2>🧠 Latest quiz results</h2><div id="quiz-scores-list" aria-live="polite"></div></section><section class="profile-card"><h2>🏅 Achievements</h2><div id="badges-list" aria-live="polite"></div></section><section class="profile-card"><h2>🚀 Suggested next step</h2><div id="next-step" aria-live="polite"></div></section></div>
+<section class="profile-card profile-tools"><div><h2>Progress controls</h2><p class="muted">Your progress is saved only in this browser. You can download a copy of your results.</p></div><div class="editor-actions"><button type="button" class="btn-secondary" id="export-progress-btn">Download progress</button><button type="button" class="btn-danger" id="reset-progress-btn">Reset my progress</button></div><p id="profile-message" role="status" class="status-message"></p></section>
+</main><script src="script.js"></script></body></html>

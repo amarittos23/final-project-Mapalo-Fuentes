@@ -1,46 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CODECODE | Code Playground</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B1026">
+    <title>CODECODE | Playground</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <header>
-    <nav aria-label="Main Navigation">
-      <a href="index.html" class="brand">CODECODE</a>
-      <a href="index.html">Home</a>
-      <a href="app.html">Lessons</a>
-      <a href="playground.html" aria-current="page">Playground</a>
-      <a href="quizzes.html">Quizzes</a>
-      <a href="profile.html">Profile</a>
-    </nav>
-  </header>
-
-  <div id="nav-error" role="alert" hidden></div>
-
-  <main>
-    <h1>Code Playground</h1>
-    <p>Write and edit your HTML, CSS, or JavaScript code below.</p>
-
-    <section class="editor-card">
-      <label for="code-editor" class="sr-only">Write your code</label>
-      <textarea id="code-editor" rows="12" placeholder="Write your HTML, CSS, or JavaScript here..."><h1>Hello, CodeCode!</h1>
-<p>I am practicing my code in the playground.</p></textarea>
-      <div class="editor-actions">
-        <button type="button" id="run-code-btn">Run Code</button>
-        <button type="button" id="reset-code-btn">Reset</button>
-      </div>
-    </section>
-
-    <section class="output-card">
-      <h2>Output</h2>
-      <div id="playground-message" role="alert">Ready for execution.</div>
-      <iframe id="code-output" title="Code Output Preview" sandbox="allow-scripts"></iframe>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+    <header>
+        <nav aria-label="Main Navigation"><a href="index.html" class="brand">CODECODE</a><a href="index.html">Home</a><a
+                href="app.html">Lessons</a><a href="playground.html" aria-current="page">Playground</a><a
+                href="quizzes.html">Quizzes</a><a href="profile.html">Profile</a></nav>
+    </header>
+    <main>
+        <section class="page-heading">
+            <p class="eyebrow">LEARN BY DOING</p>
+            <h1>Code playground</h1>
+            <p>Choose a language, load a guided example, make a small change, and run it. The preview shows what your
+                code does.</p>
+        </section>
+        <section class="playground-guide">
+            <div><strong>1. Choose</strong><span>Select HTML, CSS, or JavaScript.</span></div>
+            <div><strong>2. Explore</strong><span>Load an example and read the comments.</span></div>
+            <div><strong>3. Experiment</strong><span>Change a value, then press Run.</span></div>
+        </section>
+        <section class="editor-card">
+            <div class="editor-toolbar">
+                <div class="language-tabs" role="group" aria-label="Code language"><button class="language-tab active"
+                        data-mode="html" type="button">HTML</button><button class="language-tab" data-mode="css"
+                        type="button">CSS</button><button class="language-tab" data-mode="javascript"
+                        type="button">JavaScript</button></div><label class="example-picker">Guided example <select
+                        id="example-select">
+                        <option value="starter">Starter example</option>
+                    </select></label>
+            </div>
+            <div class="editor-help" id="editor-help">HTML builds the structure and content of a webpage.</div><label
+                for="code-editor" class="editor-label">Your code <span>Tip: try changing the sample text or
+                    color.</span></label><textarea id="code-editor" spellcheck="false" rows="16"
+                aria-describedby="editor-help"></textarea>
+            <div class="editor-actions"><button type="button" class="btn-primary" id="run-code-btn">▶ Run
+                    code</button><button type="button" class="btn-secondary" id="reset-code-btn">↺ Reset
+                    example</button><button type="button" class="btn-secondary" id="clear-code-btn">Clear
+                    editor</button></div>
+            <p id="playground-message" class="status-message" role="status">Ready when you are. Load an example or write
+                your own code.</p>
+        </section>
+        <section class="output-card">
+            <div class="section-row">
+                <div>
+                    <p class="eyebrow">LIVE RESULT</p>
+                    <h2>Preview window</h2>
+                </div><span class="preview-dot">● Live preview</span>
+            </div><iframe id="code-output" title="Your code preview" sandbox="allow-scripts"></iframe>
+        </section>
+        <section class="tip-card">
+            <h2>Not sure what to try?</h2>
+            <p>Start by changing one thing only: a heading, a background color, or a button message. Run the code again
+                and compare the result. Small experiments make coding easier to understand.</p><a class="text-link"
+                href="app.html">Review the step-by-step lessons →</a>
+        </section>
+    </main>
+    <script src="script.js"></script>
 </body>
+
 </html>

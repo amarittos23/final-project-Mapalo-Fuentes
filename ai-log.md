@@ -120,3 +120,19 @@ Minimum of 5 meaningful AI logs.
 - **What I changed or rejected, and why:** The updated project keeps the original CODECODE name, pages, lesson content, quiz, challenge, profile, and browser-based progress approach. I added a new display-mode story and matching test criteria instead of claiming that features such as accounts or cross-device syncing exist.
 - **How I tested it:** The files have been updated, but browser testing has not yet been completed. Before marking this entry as finished, open `index.html`, test the navigation and theme toggle on each page, reload to check theme persistence, and check the layout at desktop and mobile widths. Record the actual pass/fail results here after testing.
 - **What I learned:** A shared CSS variable system makes it easier to keep multiple pages visually consistent. Browser `localStorage` can remember a theme choice between pages, but it does not provide account-based or cross-device synchronization.
+
+---
+
+## Entry 11 — Expanded learning modules and interactive student experience
+
+**Date:** November 28, 2026  
+**Request:** Expand the HTML, CSS, and JavaScript modules into complete beginner-friendly step-by-step learning paths; improve playground instructions and examples; add/update quizzes for all three subjects and ensure retakes update the latest result; and make the profile and overall website more interactive.
+
+**Changes prepared:**
+- Added eight structured introductory lessons for each of HTML, CSS, and JavaScript (24 lessons total). Each lesson includes an explanation, analogy, sample code, concept note, practice task, expected result, and completion tracking.
+- Rebuilt the playground with three language modes and three guided examples per language, plain-language instructions, run/reset/clear controls, and a sandboxed preview.
+- Added six-question knowledge checks for each language. Submission requires all questions to be answered, displays feedback and explanations, and saves one latest result per subject so retakes replace the previous result.
+- Reworked the profile into a learner dashboard with a display name, statistics, progress bar, completed lessons, latest quiz results, milestone achievements, next-step suggestion, JSON export, and progress reset confirmation.
+- Replaced the shared stylesheet with a responsive interface using the requested navy, electric blue, cyan, and soft-white palette.
+
+**Review and limitations:** This is a frontend-only learning project. Progress uses local browser storage and does not sync between devices. The code changes require manual browser testing across desktop/mobile sizes and all three browser preview modes before they can be described as fully tested. AI-generated code and lesson explanations should be reviewed by the project team and instructor for curriculum fit and correctness.

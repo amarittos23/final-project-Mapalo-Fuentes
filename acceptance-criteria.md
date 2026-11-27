@@ -1,54 +1,38 @@
-# CODECODE — Acceptance Criteria
+# CODECODE Acceptance Criteria
 
-Each criterion is written so a classmate can test it as a visible pass/fail result. The IDs match `user-story.md`.
+## AC1 — Learning paths
+- Given a student opens Lessons, when the page loads, then HTML, CSS, and JavaScript choices are visible.
+- Given a student selects a language, when its path opens, then eight lessons are listed for that language.
+- Given a student opens a lesson, then the page shows an explanation, analogy, code example, explanatory note, practice task, and expected result.
+- Given a student marks a lesson complete, then its completion state is saved and remains after refreshing the same browser.
 
-## Feature 1: Discover and navigate CODECODE
+## AC2 — Guided playground
+- Given a student opens Playground, then HTML, CSS, and JavaScript tabs and a guided example selector are available.
+- Given a student selects a language, then the example selector displays examples for that language.
+- Given a student loads an example and selects Run, then the preview displays the resulting HTML/CSS/JavaScript behavior.
+- Given a student selects Reset example, then the editor returns to the selected example's original code.
+- Given a student clears the editor, then the editor and preview are cleared.
 
-### US1 — Explore the learning homepage
-- **AC1.1:** Given I open `index.html`, when the homepage finishes loading, then I see the CODECODE introduction, a clear call to action, and cards linking to the main learning areas.
-- **AC1.2:** Given I choose the Lessons or Playground call to action, when I activate it, then the corresponding page opens.
-- **AC1.3:** Given a featured area has no content, when I view that area, then I see a helpful empty-state message instead of a blank section.
+## AC3 — Quizzes
+- Given a student opens Quizzes, then separate HTML, CSS, and JavaScript quiz cards are shown.
+- Given a student starts a quiz, then each question and its answer options are displayed.
+- Given a student submits with unanswered questions, then the page asks the student to answer the remaining questions.
+- Given a student submits all answers, then the score, correct answers, and explanations are displayed.
+- Given a student retakes a subject quiz, then the latest saved result for that subject is replaced rather than duplicated.
 
-### US2 — Move between learning areas
-- **AC2.1:** Given I am on any CODECODE page, when I select Home, Lessons, Playground, Quizzes, or Profile, then the matching page opens.
-- **AC2.2:** Given I am viewing a page, when its navigation is displayed, then the current page is visually identified and programmatically marked.
-- **AC2.3:** Given a navigation destination is unavailable, when I select its link, then I see a readable message and the browser does not navigate to a broken destination.
+## AC4 — Profile and progress
+- Given a student opens Profile, then the page shows lesson completion, latest quiz results, average latest quiz score, and overall progress.
+- Given the student completes a lesson or submits a quiz, then the corresponding profile information updates from saved browser data.
+- Given a student earns a milestone, then the matching achievement is displayed.
+- Given a student edits the display name, then the learner card displays the updated name after refresh.
+- Given a student downloads progress, then a JSON file containing the display name, completed lessons, and latest quiz results is created.
+- Given a student confirms reset, then locally saved lesson and quiz progress is cleared.
 
-## Feature 2: Learn and practice
+## AC5 — Accessibility and responsive behavior
+- Given the site is used on a narrow screen, then navigation, lesson lists, cards, and controls reflow without horizontal page overflow.
+- Given a student navigates with a keyboard, then interactive controls show a visible focus indicator.
+- Given a student prefers reduced motion, then nonessential transitions are minimized.
 
-### US3 — Choose a programming language
-- **AC3.1:** Given I am on the Lessons page, when I select HTML, CSS, or JavaScript, then the matching lesson cards appear and the selected language button is visibly active.
-- **AC3.2:** Given a language has no lessons, when I select it, then I see a clear message explaining that lessons are not available yet.
-- **AC3.3:** Given I switch between language buttons, when each selection changes, then only the selected language's lessons are shown.
-
-### US4 — Track lesson completion
-- **AC4.1:** Given a lesson is not completed, when I select Mark as Completed, then the lesson is recorded and its button changes to a completed state.
-- **AC4.2:** Given I have completed a lesson, when I open or refresh my Profile page, then that lesson appears in Completed Lessons.
-- **AC4.3:** Given I have not completed any lessons, when I view my profile, then I see a helpful empty-state message.
-
-### US5 — Experiment in the code playground
-- **AC5.1:** Given I enter valid HTML/CSS/JavaScript in the editor, when I select Run Code, then the preview area displays the result.
-- **AC5.2:** Given the editor contains only spaces or is empty, when I select Run Code, then I see a message asking me to enter code and no stale preview is shown.
-- **AC5.3:** Given I have entered code, when I select Reset, then the editor and preview are cleared and the status returns to its ready message.
-- **AC5.4:** Given the code produces a JavaScript runtime error, when I run it, then the playground displays an error notice rather than silently reporting success.
-
-## Feature 3: Check knowledge and progress
-
-### US6 — Take interactive quizzes and challenges
-- **AC6.1:** Given I open Quizzes, when I select an available activity, then its questions or coding task are displayed.
-- **AC6.2:** Given I select an answer, when the answer is checked, then I receive visible feedback for that question.
-- **AC6.3:** Given I submit a quiz with answered questions, when scoring finishes, then I see my score and it is saved for my profile.
-- **AC6.4:** Given no activities are available, when I open Quizzes, then I see a clear empty-state message.
-
-### US7 — Review my learning progress
-- **AC7.1:** Given I have completed lessons, when I open Profile, then I see the names of those lessons.
-- **AC7.2:** Given I have submitted quizzes, when I open Profile, then I see each saved quiz score and its total.
-- **AC7.3:** Given I have earned achievements, when I open Profile, then I see the corresponding badges and descriptions.
-- **AC7.4:** Given there is no saved progress, when I open Profile, then each relevant section displays its own helpful empty-state message.
-
-## Feature 4: Personalize the experience
-
-### US8 — Choose a comfortable display mode
-- **AC8.1:** Given I am on a CODECODE page, when I activate the display-mode control, then the page changes to the alternate color theme.
-- **AC8.2:** Given I selected a display mode, when I navigate to another CODECODE page or reload, then my selected mode remains active.
-- **AC8.3:** Given browser storage is unavailable or has no saved preference, when the page loads, then the default theme is displayed without preventing the page from working.
+## AC6 — Local data expectations
+- Given the student refreshes the same browser, then locally saved progress remains available.
+- Given the student uses another device or clears browser storage, then the site does not claim that progress is synchronized or recoverable from a server.

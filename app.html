@@ -1,37 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CODECODE | Learning Modules</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B1026"><title>CODECODE | Learning Modules</title><link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <nav aria-label="Main Navigation">
-    <a href="index.html" class="brand">CODECODE</a>
-      <a href="index.html">Home</a>
-      <a href="app.html" aria-current="page">Lessons</a>
-      <a href="playground.html">Playground</a>
-      <a href="quizzes.html">Quizzes</a>
-      <a href="profile.html">Profile</a>
-    </nav>
-  </header>
-<div id="nav-error" role="alert" hidden></div>
-  <main>
-    <h1>Learning Modules</h1>
-    <p>Select HTML, CSS, or JavaScript to start learning.</p>
-    <div id="module-selector" role="group" aria-label="Select programming language">
-      <button type="button" class="module-btn" data-lang="html">HTML</button>
-      <button type="button" class="module-btn" data-lang="css">CSS</button>
-      <button type="button" class="module-btn" data-lang="javascript">JavaScript</button>
-    </div>
-
-    <section id="lessons-container" aria-live="polite">
-      <p>Choose a language above to view its lessons.</p>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<header><nav aria-label="Main Navigation"><a href="index.html" class="brand">CODECODE</a><a href="index.html">Home</a><a href="app.html" aria-current="page">Lessons</a><a href="playground.html">Playground</a><a href="quizzes.html">Quizzes</a><a href="profile.html">Profile</a></nav></header>
+<main>
+  <section class="page-heading"><p class="eyebrow">LEARN AT YOUR OWN PACE</p><h1>Learning modules</h1><p>Start with the basics, follow each step, study the example, then try a quick knowledge check. Your completed lessons are saved on this browser.</p></section>
+  <section class="stats-strip" id="learning-overview" aria-live="polite"></section>
+  <div id="module-selector" class="module-selector" role="group" aria-label="Choose a learning path">
+    <button type="button" class="module-btn active" data-lang="html">🌐 HTML <small>Page structure</small></button>
+    <button type="button" class="module-btn" data-lang="css">🎨 CSS <small>Page design</small></button>
+    <button type="button" class="module-btn" data-lang="javascript">⚡ JavaScript <small>Page behavior</small></button>
+  </div>
+  <section class="module-layout">
+    <aside class="lesson-sidebar"><h2 id="path-title">HTML learning path</h2><p class="muted">Work through the lessons in order or revisit any topic.</p><div id="lesson-list" class="lesson-list"></div></aside>
+    <article id="lesson-detail" class="lesson-detail" aria-live="polite"><p>Select a lesson to begin.</p></article>
+  </section>
+</main>
+<script src="script.js"></script>
+</body></html>

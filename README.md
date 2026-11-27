@@ -1,83 +1,55 @@
 # CODECODE
 ### Learn the web. Write the code. See your progress.
 
-CODECODE is a beginner-friendly web learning platform for students who want to understand **HTML, CSS, and JavaScript** through short lessons, hands-on coding, quizzes, and visible progress.
+CODECODE is a beginner-friendly, interactive frontend learning platform for students starting with **HTML, CSS, and JavaScript**. It combines step-by-step modules, guided code examples, a browser-based playground, subject quizzes, and a learner profile.
 
-> **Project goal:** Make the first steps in frontend development feel organized, practical, and rewarding—not intimidating.
+## Learning experience
 
-## The problem
+- **Step-by-step lessons:** Eight lessons for each language (24 total). Each lesson includes a plain-language explanation, a simple analogy, a code sample, notes about common concepts, a small task, and an expected result.
+- **Guided playground:** Switch between HTML, CSS, and JavaScript. Each language includes three ready-to-run examples, an explanation of what to try, a reset option, and a live preview. CSS examples are placed in a sample page so students can immediately see the styling; JavaScript examples run in the preview frame.
+- **Updated quizzes:** Separate HTML, CSS, and JavaScript knowledge checks. Students receive explanations after submitting. The latest score for each subject replaces its previous result, so the quiz list and profile stay current after retakes.
+- **Interactive profile:** Set a display name, view lesson and quiz statistics, track overall progress, earn milestone achievements, see a suggested next step, download a JSON progress report, or reset local progress.
+- **Responsive design:** Uses the requested palette: `#0B1026`, `#1F4BFF`, `#00E5FF`, and `#F5F6FA`.
 
-BSIT first-year students at Northern Bukidnon State College (NBSC), especially beginners with little or no programming experience, may struggle to find simple and organized resources that let them learn a concept and immediately practice it.
+## How students can use it
 
-## Who CODECODE is for
-
-- **Primary users:** BSIT first-year students of NBSC who are beginning to learn frontend programming.
-- **Additional users:** Teachers and instructors who want a simple learning companion for introductory web-development topics.
-
-## What CODECODE offers
-
-| Learning area | What students can do |
-|---|---|
-| **Home** | Understand the platform and jump into lessons or practice. |
-| **Lessons** | Choose HTML, CSS, or JavaScript modules and mark lessons as completed. |
-| **Code Playground** | Write code, run it in a preview, review the output, and reset the editor. |
-| **Quizzes & Challenges** | Answer an HTML quiz, receive feedback, and try a CSS coding challenge. |
-| **Student Profile** | Review completed lessons, saved quiz scores, and earned badges. |
-
-## A more engaging learning experience
-
-The interface uses a focused midnight-blue and electric-blue palette, with cyan highlights and soft light surfaces:
-
-| Color | Hex | Purpose |
-|---|---|---|
-| Midnight navy | `#0B1026` | Main background and visual depth |
-| Electric blue | `#1F4BFF` | Primary actions and active states |
-| Neon cyan | `#00E5FF` | Highlights, focus states, and accents |
-| Soft white | `#F5F6FA` | Readable surfaces and contrast |
-
-The experience is designed around clear navigation, responsive layouts, visible interaction states, helpful feedback, and a display-mode preference.
-
-## Progress and browser storage
-
-CODECODE currently uses the browser's `localStorage` to remember completed lessons, quiz scores, and the selected display mode on the same browser. This is a frontend learning project; progress is not synced between devices and is not a secure account system.
-
-## Getting started
-
-1. Download or clone this repository.
-2. Keep the HTML pages, `styles.css`, and `script.js` together in the same project folder.
-3. Open `index.html` in a modern browser.
-4. Use the navigation to explore Lessons, Playground, Quizzes, and Profile.
-
-No package installation or build command is required for the current static version.
+1. Open `index.html` in a modern browser.
+2. Select **Lessons** and choose HTML, CSS, or JavaScript.
+3. Read the explanation and analogy, inspect the example, and try the task in the Playground.
+4. Mark the lesson complete when finished.
+5. Open **Quizzes**, answer all questions in a language quiz, and submit to save the latest score.
+6. Visit **Profile** to review progress and achievements.
 
 ## Project files
 
 ```text
 CODECODE/
-├── index.html               # Homepage
-├── app.html                 # HTML, CSS, and JavaScript lessons
-├── playground.html          # Code editor and live preview
-├── quizzes.html             # Quizzes and coding challenges
-├── profile.html             # Learning progress and achievements
+├── index.html
+├── app.html                 # Step-by-step learning modules
+├── playground.html          # Guided HTML/CSS/JavaScript editor and preview
+├── quizzes.html             # Three subject quizzes
+├── profile.html             # Progress dashboard and achievements
 ├── styles.css               # Shared responsive design system
-├── script.js                # Page interactions and local storage
-├── user-story.md            # User needs and benefits
-├── acceptance-criteria.md   # Testable completion criteria
-├── ai-log.md                # AI assistance and human review record
-└── README.md                # Project overview and setup
+├── script.js                # Lessons, editor, quizzes, and progress logic
+├── user-story.md
+├── acceptance-criteria.md
+├── ai-log.md
+└── README.md
 ```
 
-## Current scope and future ideas
+## Progress and privacy
 
-**Included in this project:** introductory lesson modules, a code playground, a 10-question HTML quiz, a CSS color challenge, local progress tracking, and milestone badges.
+This is a static frontend project. Lesson completion, latest quiz scores, and the learner display name are saved with browser `localStorage` on the current device/browser. Progress is not synchronized across devices and there is no server account or password system. The playground preview runs in a sandboxed iframe; it is intended for learning examples, not production hosting.
 
-**Possible next improvements:** add more complete JavaScript lessons, expand the quiz library, add guided coding hints, and provide a downloadable progress report.
+## Run locally
+
+Keep all HTML files, `styles.css`, and `script.js` in the same folder, then open `index.html`. No package installation or build step is required.
 
 ## Team
 
 - **Amare Stoudemire J. Mapalo** — CODECODE App Developer
 - **Clint Stohj Fuentes** — CODECODE App Developer
 
-## Live link
+## Testing note
 
-Not deployed yet. Add the GitHub Pages URL here after publishing the project.
+Check the site in a current desktop and mobile browser. Verify that all three lesson paths load, examples run in the playground, quiz retakes update the latest saved score, and profile data remains after refreshing the same browser. Browser testing is still required before presenting this as a fully tested release.

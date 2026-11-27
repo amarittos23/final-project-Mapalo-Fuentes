@@ -1,507 +1,77 @@
-const unavailableLinks = document.querySelectorAll('nav a[data-available="false"]');
-const navError = document.getElementById('nav-error');
-
-unavailableLinks.forEach(function (link) {
-  link.addEventListener('click', function (event) {
-    event.preventDefault();
-    const pageName = link.textContent;
-    navError.textContent = `Sorry, the ${pageName} page is not available yet.`;
-    navError.hidden = false;
-  });
-});
-
-const lessonsData = {
-  html: [
-    { title: 'HTML Basics', description: 'Learn tags, headings, and paragraphs.' },
-    { title: 'Links and Images', description: 'Connect pages and display pictures.' }
-  ],
-  css: [
-    { title: 'CSS Selectors', description: 'Style elements using classes and IDs.' },
-    { title: 'Flexbox Layout', description: 'Align items for desktop and mobile.' }
-  ],
-  javascript: []
+/* CODECODE interactive learning platform. Progress is stored locally in this browser. */
+const STORE = {
+  lessons: 'codecode_completed_lessons', scores: 'codecode_quiz_scores', name: 'codecode_student_name',
+  theme: 'codecode_theme'
 };
-
-const lessonsContainer = document.getElementById('lessons-container');
-
-function getCompletedLessons() {
-  const saved = localStorage.getItem('codecode_completed_lessons');
-  return saved ? JSON.parse(saved) : [];
-}
-
-function saveCompletedLesson(title) {
-  const completed = getCompletedLessons();
-  if (title && !completed.includes(title)) {
-    completed.push(title);
-    localStorage.setItem('codecode_completed_lessons', JSON.stringify(completed));
-  }
-}
-
-function showModules(language) {
-  if (!lessonsContainer) return;
-  const lessons = lessonsData[language] || [];
-  lessonsContainer.innerHTML = '';
-
-  if (lessons.length === 0) {
-    const emptyMsg = document.createElement('p');
-    emptyMsg.textContent = 'No lessons are available for this module yet.';
-    lessonsContainer.appendChild(emptyMsg);
-    return;
-  }
-
-  lessons.forEach(function (lesson) {
-    const card = document.createElement('article');
-    card.className = 'lesson-card';
-    card.innerHTML = `<h2>${lesson.title}</h2><p>${lesson.description}</p>`;
-
-    const completeBtn = document.createElement('button');
-    completeBtn.type = 'button';
-    completeBtn.className = 'btn-secondary complete-btn';
-    const alreadyDone = getCompletedLessons().includes(lesson.title);
-    completeBtn.textContent = alreadyDone ? 'Completed ✓' : 'Mark as Completed';
-    completeBtn.disabled = alreadyDone;
-
-    completeBtn.addEventListener('click', function () {
-      saveCompletedLesson(lesson.title);
-      completeBtn.textContent = 'Completed ✓';
-      completeBtn.disabled = true;
-    });
-
-    card.appendChild(completeBtn);
-    lessonsContainer.appendChild(card);
-  });
-}
-
-const moduleButtons = document.querySelectorAll('.module-btn');
-
-moduleButtons.forEach(function (button) {
-  button.addEventListener('click', function () {
-    moduleButtons.forEach(function (btn) {
-      btn.classList.remove('active');
-    });
-    button.classList.add('active');
-
-    const selectedLang = button.dataset.lang;
-    showModules(selectedLang);
-  });
-});
-
-const codeEditor = document.getElementById('code-editor');
-const runCodeBtn = document.getElementById('run-code-btn');
-const resetCodeBtn = document.getElementById('reset-code-btn');
-const playgroundMsg = document.getElementById('playground-message');
-const codeOutput = document.getElementById('code-output');
-
-if (runCodeBtn && codeEditor && playgroundMsg && codeOutput) {
-  runCodeBtn.addEventListener('click', function () {
-    const code = codeEditor.value.trim();
-    if (code === '') {
-      playgroundMsg.textContent = 'Please enter some code before running.';
-      playgroundMsg.className = 'msg-error';
-      codeOutput.srcdoc = '';
-      return;
-    }
-    playgroundMsg.textContent = 'Output rendered below.';
-    playgroundMsg.className = 'msg-success';
-    const errorCatcher = `<script>window.onerror = function(msg) { parent.postMessage({ type: 'playground-error', message: msg }, '*'); };<\/script>`;
-    codeOutput.srcdoc = errorCatcher + code;
-  });
-}
-
-window.addEventListener('message', function (event) {
-  if (event.data && event.data.type === 'playground-error' && playgroundMsg) {
-    playgroundMsg.textContent = 'Code Error: ' + event.data.message;
-    playgroundMsg.className = 'msg-error';
-  }
-});
-
-if (resetCodeBtn && codeEditor && playgroundMsg) {
-  resetCodeBtn.addEventListener('click', function () {
-    codeEditor.value = '';
-    playgroundMsg.textContent = 'Ready for execution.';
-    playgroundMsg.className = '';
-    if (codeOutput) {
-      codeOutput.srcdoc = '';
-    }
-  });
-}
-
-const activitiesData = [
-  {
-    id: 'html-quiz',
-    type: 'Quiz',
-    title: 'HTML Basics Quiz',
-    questions: [
-      {
-        prompt: '1. Which HTML tag is used to create the largest main heading on a page?',
-        options: ['<heading>', '<h6>', '<h1>', '<head>'],
-        answer: '<h1>'
-      },
-      {
-        prompt: '2. Which attribute is required on an <img> tag to provide alternative text?',
-        options: ['title', 'alt', 'src', 'href'],
-        answer: 'alt'
-      },
-      {
-        prompt: '3. Which HTML element creates a numbered list?',
-        options: ['<ul>', '<li>', '<ol>', '<dl>'],
-        answer: '<ol>'
-      },
-      {
-        prompt: '4. Which HTML tag is used to create a hyperlink?',
-        options: ['<link>', '<a>', '<href>', '<nav>'],
-        answer: '<a>'
-      },
-      {
-        prompt: '5. Which semantic tag represents the main navigation links of a page?',
-        options: ['<header>', '<section>', '<nav>', '<aside>'],
-        answer: '<nav>'
-      },
-      {
-        prompt: '6. Where does the <title> element belong in an HTML document?',
-        options: ['Inside <body>', 'Inside <head>', 'Inside <footer>', 'Inside <main>'],
-        answer: 'Inside <head>'
-      },
-      {
-        prompt: '7. Which tag creates a line break without starting a new paragraph?',
-        options: ['<lb>', '<break>', '<br>', '<hr>'],
-        answer: '<br>'
-      },
-      {
-        prompt: '8. Which attribute uniquely identifies a single HTML element on a page?',
-        options: ['class', 'name', 'id', 'type'],
-        answer: 'id'
-      },
-      {
-        prompt: '9. Which HTML tag is used to define a paragraph of text?',
-        options: ['<para>', '<text>', '<p>', '<span>'],
-        answer: '<p>'
-      },
-      {
-        prompt: '10. What does HTML stand for?',
-        options: [
-          'Hyper Text Markup Language',
-          'High Tech Modern Language',
-          'Hyperlinks and Text Management Language',
-          'Home Tool Markup Language'
-        ],
-        answer: 'Hyper Text Markup Language'
-      }
-    ]
-  },
-  {
-    id: 'css-challenge',
-    type: 'Coding Challenge',
-    title: 'CSS Color Challenge',
-    question: 'Write a CSS rule that sets the text color of all <p> elements to blue.',
-    placeholder: 'Example: p { color: blue; }',
-    expectedSnippet: 'color: blue'
-  }
-];
-
-function getQuizScores() {
-  const saved = localStorage.getItem('codecode_quiz_scores');
-  return saved ? JSON.parse(saved) : [];
-}
-
-function saveQuizScore(quizTitle, score, total) {
-  const scores = getQuizScores();
-  const existingIndex = scores.findIndex(function (item) {
-    return item.title === quizTitle;
-  });
-  const entry = { title: quizTitle, score: score, total: total };
-
-  if (existingIndex !== -1) {
-    scores[existingIndex] = entry;
-  } else {
-    scores.push(entry);
-  }
-  localStorage.setItem('codecode_quiz_scores', JSON.stringify(scores));
-}
-
-const activityList = document.getElementById('activity-list');
-const activityView = document.getElementById('activity-view');
-
-function renderActivities() {
-  if (!activityList || !activityView) return;
-
-  if (!activitiesData || activitiesData.length === 0) {
-    activityList.innerHTML = '<p class="empty-state">No quizzes or challenges are available yet.</p>';
-    activityView.style.display = 'none';
-    return;
-  }
-
-  activityList.innerHTML = '';
-  activitiesData.forEach(function (activity) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'activity-btn';
-    btn.textContent = activity.type + ': ' + activity.title;
-    btn.addEventListener('click', function () {
-      openActivity(activity);
-    });
-    activityList.appendChild(btn);
-  });
-}
-
-function openActivity(activity) {
-  activityView.innerHTML = '';
-
-  const heading = document.createElement('h2');
-  heading.textContent = activity.title + ' (' + activity.type + ')';
-  activityView.appendChild(heading);
-
-  if (activity.type === 'Quiz') {
-    const selectedAnswers = {};
-
-    activity.questions.forEach(function (q, index) {
-      const questionBlock = document.createElement('div');
-      questionBlock.className = 'question-block';
-
-      const prompt = document.createElement('p');
-      prompt.textContent = q.prompt;
-      questionBlock.appendChild(prompt);
-
-      const feedback = document.createElement('div');
-      feedback.className = 'question-feedback';
-      feedback.setAttribute('role', 'alert');
-
-      q.options.forEach(function (optionText) {
-        const optionBtn = document.createElement('button');
-        optionBtn.type = 'button';
-        optionBtn.className = 'option-btn';
-        optionBtn.textContent = optionText;
-        optionBtn.addEventListener('click', function () {
-          selectedAnswers[index] = optionText;
-          if (optionText === q.answer) {
-            feedback.textContent = 'Correct! Well done.';
-            feedback.className = 'question-feedback msg-success';
-          } else {
-            feedback.textContent = 'Not quite. Try another option!';
-            feedback.className = 'question-feedback msg-error';
-          }
-        });
-        questionBlock.appendChild(optionBtn);
-      });
-
-      questionBlock.appendChild(feedback);
-      activityView.appendChild(questionBlock);
-    });
-
-    const submitQuizBtn = document.createElement('button');
-    submitQuizBtn.type = 'button';
-    submitQuizBtn.className = 'btn-primary';
-    submitQuizBtn.textContent = 'Submit Quiz & Save Score';
-
-    const quizSummaryMsg = document.createElement('div');
-    quizSummaryMsg.id = 'quiz-summary-msg';
-    quizSummaryMsg.setAttribute('role', 'alert');
-
-    submitQuizBtn.addEventListener('click', function () {
-      let score = 0;
-      activity.questions.forEach(function (q, index) {
-        if (selectedAnswers[index] === q.answer) {
-          score++;
-        }
-      });
-      const total = activity.questions.length;
-      saveQuizScore(activity.title, score, total);
-      quizSummaryMsg.textContent = `Quiz submitted! Your score: ${score} / ${total} (Saved to Profile)`;
-      quizSummaryMsg.className = 'msg-success';
-    });
-
-    activityView.appendChild(submitQuizBtn);
-    activityView.appendChild(quizSummaryMsg);
-  } else {
-    const prompt = document.createElement('p');
-    prompt.textContent = activity.question;
-
-    const input = document.createElement('textarea');
-    input.rows = 4;
-    input.className = 'challenge-input';
-    input.placeholder = activity.placeholder;
-
-    const feedback = document.createElement('div');
-    feedback.id = 'quiz-feedback';
-    feedback.setAttribute('role', 'alert');
-
-    const submitBtn = document.createElement('button');
-    submitBtn.type = 'button';
-    submitBtn.className = 'btn-primary';
-    submitBtn.textContent = 'Submit Solution';
-    submitBtn.addEventListener('click', function () {
-      const userCode = input.value.trim().toLowerCase();
-      if (userCode === '') {
-        feedback.textContent = 'Please enter your code solution first.';
-        feedback.className = 'msg-error';
-      } else if (userCode.includes(activity.expectedSnippet)) {
-        feedback.textContent = 'Great job! Your CSS rule looks right.';
-        feedback.className = 'msg-success';
-      } else {
-        feedback.textContent = 'Keep trying! Make sure your rule sets p text color to blue.';
-        feedback.className = 'msg-error';
-      }
-    });
-
-    activityView.appendChild(prompt);
-    activityView.appendChild(input);
-    activityView.appendChild(submitBtn);
-    activityView.appendChild(feedback);
-  }
-}
-
-renderActivities();
-
-const completedLessonsList = document.getElementById('completed-lessons-list');
-
-function renderCompletedLessons() {
-  if (!completedLessonsList) return;
-
-  const completed = getCompletedLessons();
-
-  if (completed.length === 0) {
-    completedLessonsList.innerHTML = '<p class="empty-state">You have not completed any lessons yet.</p>';
-    return;
-  }
-
-  const ul = document.createElement('ul');
-  ul.className = 'completed-list';
-
-  completed.forEach(function (lessonTitle) {
-    const li = document.createElement('li');
-    li.className = 'completed-item';
-    li.textContent = '✓ ' + lessonTitle;
-    ul.appendChild(li);
-  });
-
-  completedLessonsList.innerHTML = '';
-  completedLessonsList.appendChild(ul);
-}
-
-renderCompletedLessons();
-
-const quizScoresList = document.getElementById('quiz-scores-list');
-
-function renderQuizScores() {
-  if (!quizScoresList) return;
-
-  const scores = getQuizScores();
-
-  if (scores.length === 0) {
-    quizScoresList.innerHTML = '<p class="empty-state">No quiz scores are available yet.</p>';
-    return;
-  }
-
-  const ul = document.createElement('ul');
-  ul.className = 'scores-list';
-
-  scores.forEach(function (item) {
-    const li = document.createElement('li');
-    li.className = 'score-item';
-    li.textContent = `${item.title}: ${item.score} / ${item.total}`;
-    ul.appendChild(li);
-  });
-
-  quizScoresList.innerHTML = '';
-  quizScoresList.appendChild(ul);
-}
-
-renderQuizScores();
-
-function getEarnedBadges() {
-  const badges = [];
-  const completedLessons = getCompletedLessons();
-  const quizScores = getQuizScores();
-
-  if (completedLessons.length >= 1) {
-    badges.push({
-      icon: '🏅',
-      title: 'First Lesson Completed',
-      description: 'Finished your first CODECODE lesson.'
-    });
-  }
-
-  if (quizScores.length >= 1) {
-    badges.push({
-      icon: '🎯',
-      title: 'Quiz Taker',
-      description: 'Submitted your first coding quiz.'
-    });
-  }
-
-  const hasHighScore = quizScores.some(function (item) {
-    return item.score >= 8;
-  });
-
-  if (hasHighScore) {
-    badges.push({
-      icon: '🏆',
-      title: 'HTML Master',
-      description: 'Scored 8 or higher on a quiz.'
-    });
-  }
-
-  return badges;
-}
-
-const badgesList = document.getElementById('badges-list');
-
-function renderBadges() {
-  if (!badgesList) return;
-
-  const badges = getEarnedBadges();
-
-  if (badges.length === 0) {
-    badgesList.innerHTML = '<p class="empty-state">No badges have been earned yet.</p>';
-    return;
-  }
-
-  const ul = document.createElement('ul');
-  ul.className = 'badges-list';
-
-  badges.forEach(function (badge) {
-    const li = document.createElement('li');
-    li.className = 'badge-item';
-    li.textContent = `${badge.icon} ${badge.title} — ${badge.description}`;
-    ul.appendChild(li);
-  });
-
-  badgesList.innerHTML = '';
-  badgesList.appendChild(ul);
-}
-
-renderBadges();
-
-// Shared display-mode control. The site remains usable if localStorage is blocked.
-(function setupThemeToggle() {
-  const nav = document.querySelector('header nav');
-  if (!nav) return;
-
-  let savedTheme = null;
-  try { savedTheme = localStorage.getItem('codecode_theme'); } catch (error) {}
-  if (savedTheme === 'light') document.body.classList.add('light-theme');
-
-  const toggle = document.createElement('button');
-  toggle.type = 'button';
-  toggle.id = 'theme-toggle';
-  toggle.setAttribute('aria-pressed', String(document.body.classList.contains('light-theme')));
-
-  function updateLabel() {
-    const isLight = document.body.classList.contains('light-theme');
-    toggle.textContent = isLight ? '☾ Dark mode' : '☀ Light mode';
-    toggle.setAttribute('aria-pressed', String(isLight));
-    toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
-  }
-
-  toggle.addEventListener('click', function () {
-    document.body.classList.toggle('light-theme');
-    try {
-      localStorage.setItem('codecode_theme',
-        document.body.classList.contains('light-theme') ? 'light' : 'dark');
-    } catch (error) {}
-    updateLabel();
-  });
-
-  nav.appendChild(toggle);
-  updateLabel();
-})();
+const read = (key, fallback) => { try { const value = localStorage.getItem(key); return value ? JSON.parse(value) : fallback; } catch { return fallback; } };
+const write = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; } };
+const completedLessons = () => read(STORE.lessons, []);
+const quizScores = () => read(STORE.scores, []);
+const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const lessonData = {
+ html: [
+  ['html-01','Meet HTML','Understand what HTML does and create your first page.','HTML is the structure of a webpage. It tells the browser what each piece of content means.','A webpage is like a house: HTML is the frame and rooms. CSS decorates it; JavaScript adds actions.','<!DOCTYPE html>\n<html>\n<head>\n  <title>My First Page</title>\n</head>\n<body>\n  <h1>Hello, world!</h1>\n  <p>I am learning HTML.</p>\n</body>\n</html>','The doctype tells the browser to use modern HTML. The head contains page information. The body contains what visitors see.','Change the heading to your name. What happens when you change the text inside <h1>?','A heading appears on the page.'],
+  ['html-02','Headings and paragraphs','Organize page text using headings and paragraphs.','Use <h1> for the main page heading, then <h2> and <h3> for sections. Use <p> for normal paragraphs.','Think of headings like chapter titles. They make information easier to scan.','<h1>My Student Portfolio</h1>\n<h2>About Me</h2>\n<p>I am a beginner web developer.</p>\n<h2>My Goals</h2>\n<p>I want to build useful websites.</p>','Heading tags have levels from h1 to h6. Do not choose a heading just because it looks bigger; choose it based on the content structure.','Add another <h2> heading called My Hobbies and a paragraph below it.','A new section heading and paragraph appear.'],
+  ['html-03','Links and navigation','Connect your page to other pages and websites.','The <a> element creates a link. Its href attribute tells the browser where the link should go.','The anchor tag is like a doorway. The href is the destination written on the doorway.','<a href="https://example.com">Visit Example</a>\n\n<nav>\n  <a href="index.html">Home</a>\n  <a href="about.html">About</a>\n</nav>','Use descriptive link text so visitors know where a link leads. For links that open a new tab, consider rel="noopener" with target="_blank".','Change the link text to say Open my favorite website.','The clickable text changes, and clicking it follows the href destination.'],
+  ['html-04','Images and alternative text','Add images and make them understandable to more people.','Use <img> with a src for the image location and alt text that describes its purpose. Images are void elements, so they do not need a closing tag.','Alt text is a short spoken description for someone who cannot see the image.','<img src="photo.jpg" alt="Students working together on a laptop">','Use meaningful alt text for informative images. Use alt="" for decorative images that do not add information.','Replace photo.jpg with an image filename you have and write useful alt text.','The browser displays the image if the file path is correct; the alt text is available when the image cannot be seen.'],
+  ['html-05','Lists','Present related items as ordered or unordered lists.','Use <ul> for bullet lists and <ol> for numbered steps. Each item belongs inside an <li> element.','Use a numbered list for instructions that have an order, and bullets for a collection without a required order.','<h2>My study tools</h2>\n<ul>\n  <li>Notebook</li>\n  <li>Laptop</li>\n  <li>Text editor</li>\n</ul>','The list item <li> must be inside a list container such as <ul> or <ol>.','Change the example into a numbered list of three study steps.','The list appears with numbers instead of bullets.'],
+  ['html-06','Forms and inputs','Collect simple information with a form.','Forms group controls used to collect information. A label explains what an input is for.','A form is like a paper form, but the fields are on a webpage.','<form>\n  <label for="student">Student name</label>\n  <input id="student" type="text" placeholder="Enter your name">\n  <button type="button">Submit</button>\n</form>','The label for value must match the input id. This helps people using keyboards and assistive technology. A real form needs a submission handler or action to send data.','Add a second input for email using type="email" and a matching label.','A second field appears and the browser can check that the email has a valid format.'],
+  ['html-07','Semantic page structure','Use meaningful elements to organize a complete webpage.','Semantic elements describe the role of content. Common examples are <header>, <nav>, <main>, <section>, <article>, and <footer>.','Semantic HTML is like labeling rooms in a building. People and tools can understand what each area is for.','<header><h1>Campus News</h1></header>\n<nav><a href="#news">News</a></nav>\n<main>\n  <section id="news"><h2>Latest news</h2><article><h3>Club fair</h3><p>Join a campus club.</p></article></section>\n</main>\n<footer>© 2026 Campus News</footer>','Use one main landmark for the primary content. Choose elements by meaning, not only by their default appearance.','Wrap your page title in a header and your main content in main.','Your page now has clearly named structural areas.'],
+  ['html-08','Tables and page review','Display data in rows and columns using an accessible table.','Use <table>, <tr>, <th>, and <td> for tabular data. Tables are for data, not for page layout.','A table is like a spreadsheet: rows are records and columns are categories.','<table>\n  <tr><th>Subject</th><th>Day</th></tr>\n  <tr><td>Web Design</td><td>Monday</td></tr>\n</table>','Use <caption> to name a table and scope="col" or scope="row" to clarify header relationships in larger tables.','Add one more row with a subject and day.','A new row is added beneath the existing data.']
+ ],
+ css: [
+  ['css-01','Meet CSS','Learn how CSS changes the look of HTML.','CSS means Cascading Style Sheets. It controls colors, spacing, fonts, borders, and layout.','HTML is the content; CSS is the design or clothing of the page.','h1 {\n  color: #1F4BFF;\n  font-size: 36px;\n}\n\np {\n  color: #333333;\n}','A CSS rule has a selector and a declaration block. Each declaration is a property followed by a value.','Change the h1 color to #00E5FF.','The heading changes to cyan.'],
+  ['css-02','Selectors','Target elements using element, class, and ID selectors.','An element selector targets every element of that type. A class starts with a dot. An ID starts with #.','A selector is like an address that tells CSS which element should receive the style.','p { color: #333; }\n.card { padding: 16px; }\n#main-title { color: #1F4BFF; }','Classes can be reused on many elements. An ID should identify one unique element on the page.','Create a .highlight rule with a yellow background.','Any element with class="highlight" gets the background.'],
+  ['css-03','Colors and typography','Make text readable with color, size, and font choices.','Use color for text, background-color for an element background, and font-family to choose typefaces.','Good design makes the words easy to read before it tries to look fancy.','body {\n  font-family: Arial, sans-serif;\n  color: #0B1026;\n  background-color: #F5F6FA;\n}\nh1 { font-size: 2rem; }','Check contrast between text and its background. Avoid using color alone to communicate important information.','Set the body background to #F5F6FA and the heading color to #1F4BFF.','The page gets a light background and blue heading.'],
+  ['css-04','Spacing and the box model','Control the space inside and outside elements.','Every element is a box. Content sits inside padding, then border, then margin outside the border.','Padding is the space inside a gift box; margin is the space between gift boxes.','.card {\n  padding: 20px;\n  border: 2px solid #1F4BFF;\n  margin: 16px;\n}\n* { box-sizing: border-box; }','Using box-sizing: border-box makes declared width include padding and border, which is often easier to reason about.','Increase the card padding to 32px and observe the extra inner space.','The content has more space between it and the border.'],
+  ['css-05','Borders, shadows, and buttons','Create clear visual components.','Borders define edges. Border-radius rounds corners. Box-shadow adds depth. Use hover and focus styles to show interaction.','A button should look clickable and show when it is selected or focused.','button {\n  background: #1F4BFF;\n  color: white;\n  border: 0;\n  border-radius: 10px;\n  padding: 12px 18px;\n}\nbutton:hover { background: #0B1026; }','Keep text contrast high and provide a visible keyboard focus style such as :focus-visible.','Add border-radius: 20px to make the button more rounded.','The button corners become more rounded.'],
+  ['css-06','Flexbox layout','Arrange items in a row or column with flexible spacing.','Flexbox is useful for arranging items along one main axis. Start with display: flex, then use gap, justify-content, and align-items.','Imagine arranging books on a shelf. Flexbox helps line them up and space them out.','.menu {\n  display: flex;\n  gap: 12px;\n  justify-content: space-between;\n  align-items: center;\n}','Use flex-wrap: wrap when items should move to another line on smaller screens.','Add flex-wrap: wrap to a navigation row.','Items can move onto another line when there is not enough width.'],
+  ['css-07','Grid and responsive design','Build layouts that adapt to different screen sizes.','CSS Grid arranges content in rows and columns. Media queries let styles change at different viewport widths.','Grid is like arranging desks in a classroom. Media queries rearrange the desks when the room gets smaller.','.cards {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n}\n@media (max-width: 700px) {\n  .cards { grid-template-columns: 1fr; }\n}','Avoid fixed widths for every component. Test your page on narrow screens and make sure text remains readable.','Change the media query breakpoint to 600px and resize the preview.','The one-column layout starts when the screen is 600px wide or less.'],
+  ['css-08','Transitions and polish','Add subtle motion and review your design.','The transition property makes a change happen smoothly. Use it for small visual feedback, not to hide important information.','A transition is like a gentle fade instead of a sudden jump.','.card {\n  transform: translateY(0);\n  transition: transform 180ms ease, box-shadow 180ms ease;\n}\n.card:hover { transform: translateY(-4px); }','Respect users who prefer reduced motion by using the prefers-reduced-motion media query.','Change 180ms to 400ms and compare the hover effect.','The hover movement takes longer to finish.']
+ ],
+ javascript: [
+  ['js-01','Meet JavaScript','Understand how JavaScript makes webpages interactive.','JavaScript is a programming language that can respond to events, update page content, and work with data.','HTML builds the page, CSS styles it, and JavaScript makes it respond.','const message = "Hello, learner!";\nconsole.log(message);','The const keyword creates a variable binding that should not be reassigned. console.log displays a value in the browser developer console.','Change the message text and run the example in the playground.','The console displays your updated message.'],
+  ['js-02','Variables and data types','Store information in variables.','Use const for values you will not reassign and let for values that may change. Common types include strings, numbers, and booleans.','A variable is a labeled container where a program keeps information.','const student = "Alex";\nlet points = 10;\nconst isLearning = true;\npoints = points + 5;\nconsole.log(student, points, isLearning);','Variable names should describe the information they store. JavaScript is case-sensitive.','Change points from 10 to 20. What number is logged after adding 5?','The result is 25.'],
+  ['js-03','Operators and conditions','Make decisions with comparisons and if/else.','Operators calculate values or compare them. An if statement runs code when a condition is true.','A condition is like asking a yes-or-no question before choosing what to do.','const score = 82;\nif (score >= 75) {\n  console.log("Passed");\n} else {\n  console.log("Try again");\n}','Use === for strict equality checks. A single = assigns a value; it does not compare two values.','Change score to 60 and run the example.','The console displays Try again.'],
+  ['js-04','Functions','Group reusable instructions into a function.','A function is a named block of code. You can pass information through parameters and return a result.','A function is like a recipe: give it ingredients, follow the steps, and get a result.','function greet(name) {\n  return "Hello, " + name + "!";\n}\n\nconst message = greet("Sam");\nconsole.log(message);','The function runs when it is called. The return keyword sends a result back to the caller.','Call greet("Taylor") and store the result in a new variable.','The function returns Hello, Taylor!'],
+  ['js-05','Arrays and loops','Work with a list of values and repeat an action.','An array stores an ordered list. A for loop repeats code. Array positions start at index 0.','An array is like a numbered list of items. A loop visits each item in turn.','const subjects = ["HTML", "CSS", "JavaScript"];\nfor (let i = 0; i < subjects.length; i++) {\n  console.log(subjects[i]);\n}','The length property tells you how many items are in the array. The last valid index is length - 1.','Add "Accessibility" to the array.','The loop also prints Accessibility.'],
+  ['js-06','DOM and events','Select an HTML element and respond to a click.','The Document Object Model (DOM) represents the page as objects. JavaScript can select an element and update it.','The DOM is a map of the page that JavaScript can use to find and change elements.','<button id="helloBtn">Click me</button>\n<p id="message">Waiting...</p>\n<script>\n  document.querySelector("#helloBtn").addEventListener("click", () => {\n    document.querySelector("#message").textContent = "You clicked the button!";\n  });\n<\/script>','addEventListener waits for an event such as click. textContent changes the text without treating it as HTML.','Change the message to say Great work!','Clicking the button updates the paragraph.'],
+  ['js-07','Objects','Group related information in one object.','An object stores information as key-value pairs. Access a property with dot notation or bracket notation.','An object is like a student record: one place for name, year level, and course.','const student = {\n  name: "Jordan",\n  year: 1,\n  course: "BSIT"\n};\nconsole.log(student.name);','Use descriptive property names. Objects can also contain methods, which are functions stored as properties.','Add a property called section with a value such as "A".','You can read it using student.section.'],
+  ['js-08','Debugging and safe coding','Find common mistakes and improve your code.','Read error messages carefully. Check spelling, brackets, quotation marks, and the line mentioned by the console.','Debugging is detective work: look for clues, test one change, and check again.','const total = 4 + 6;\nconsole.log("Total:", total);\n// Try changing 4 + 6 to 4 + "6" and compare the result.','Use console.log to inspect values. Do not paste code from unknown sources into a browser console.','Change the calculation and predict the result before running it.','The console shows the value produced by your expression.']
+ ]
+};
+const languageNames = {html:'HTML',css:'CSS',javascript:'JavaScript'};
+function renderLearningOverview(){const el=document.getElementById('learning-overview');if(!el)return;const done=completedLessons().length;const total=Object.values(lessonData).reduce((n,a)=>n+a.length,0);el.innerHTML=`<div class="mini-stat"><strong>${done}</strong><span>Lessons completed</span></div><div class="mini-stat"><strong>${quizScores().length}/3</strong><span>Quiz subjects attempted</span></div><div class="mini-stat"><strong>${Math.round(done/total*100)}%</strong><span>Lesson progress</span></div>`;}
+let selectedLanguage='html';
+function showModules(language, lessonId){selectedLanguage=language;document.querySelectorAll('.module-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===language));const pathTitle=document.getElementById('path-title');const list=document.getElementById('lesson-list');const detail=document.getElementById('lesson-detail');if(!list||!detail)return;pathTitle.textContent=languageNames[language]+' learning path';const lessons=lessonData[language];const done=completedLessons();list.innerHTML='';lessons.forEach((lesson,index)=>{const b=document.createElement('button');b.type='button';b.className='lesson-nav-item'+(lesson[0]===(lessonId||lessons[0][0])?' active':'');b.innerHTML=`<span class="lesson-number">${String(index+1).padStart(2,'0')}</span><span>${escapeHTML(lesson[1])}</span><span class="lesson-check">${done.includes(lesson[0])?'✓':'○'}</span>`;b.addEventListener('click',()=>showModules(language,lesson[0]));list.appendChild(b);});const lesson=lessons.find(x=>x[0]===(lessonId||lessons[0][0]))||lessons[0];const isDone=done.includes(lesson[0]);detail.innerHTML=`<div class="lesson-topline"><span class="tag">${languageNames[language]} · LESSON ${lessons.indexOf(lesson)+1} OF ${lessons.length}</span><span class="completion-state">${isDone?'✓ Completed':'In progress'}</span></div><h2>${escapeHTML(lesson[1])}</h2><p class="lesson-lead">${escapeHTML(lesson[2])}</p><div class="lesson-section"><h3>1. Understand the idea</h3><p>${escapeHTML(lesson[3])}</p><div class="analogy-box"><strong>💡 Easy way to remember</strong><p>${escapeHTML(lesson[4])}</p></div></div><div class="lesson-section"><h3>2. Study the example</h3><p>Read the code slowly. Notice what each line is doing.</p><pre class="code-sample"><code>${escapeHTML(lesson[5])}</code></pre><p class="explanation-note">${escapeHTML(lesson[6])}</p><a class="text-link" href="playground.html">Try this in the playground →</a></div><div class="lesson-section practice-box"><h3>3. Your turn</h3><p>${escapeHTML(lesson[7])}</p><p class="muted">Expected result: ${escapeHTML(lesson[8])}</p><button type="button" class="btn-primary" id="complete-lesson-btn" ${isDone?'disabled':''}>${isDone?'✓ Lesson completed':'Mark lesson as completed'}</button><button type="button" class="btn-secondary" id="next-lesson-btn">${lessons.indexOf(lesson)===lessons.length-1?'Back to first lesson':'Next lesson →'}</button></div>`;const completeBtn=document.getElementById('complete-lesson-btn');completeBtn.addEventListener('click',()=>{const updated=completedLessons();if(!updated.includes(lesson[0]))updated.push(lesson[0]);write(STORE.lessons,updated);showModules(language,lesson[0]);renderLearningOverview();});document.getElementById('next-lesson-btn').addEventListener('click',()=>{const i=lessons.indexOf(lesson);showModules(language,lessons[(i+1)%lessons.length][0]);});}
+document.querySelectorAll('.module-btn').forEach(b=>b.addEventListener('click',()=>showModules(b.dataset.lang)));if(document.getElementById('lesson-list')){showModules('html');renderLearningOverview();}
+
+// Playground: a guided editor with separate HTML, CSS, and JavaScript examples.
+const playgroundExamples={
+ html:[{name:'Starter page',help:'HTML creates the content and structure. Change the heading text and press Run.',code:'<!DOCTYPE html>\n<html>\n<body>\n  <h1>Hello, learner!</h1>\n  <p>This is my first webpage.</p>\n  <button>My first button</button>\n</body>\n</html>'},{name:'Student profile card',help:'This example uses headings, paragraphs, and a list. Change the name and hobbies.',code:'<article>\n  <h1>Meet Alex</h1>\n  <p>First-year BSIT student</p>\n  <h2>My hobbies</h2>\n  <ul><li>Drawing</li><li>Gaming</li><li>Coding</li></ul>\n</article>'},{name:'Simple contact form',help:'Labels explain each input. Try changing the placeholder text.',code:'<form>\n  <label for="name">Your name</label>\n  <input id="name" placeholder="Type your name">\n  <label for="email">Email</label>\n  <input id="email" type="email" placeholder="name@example.com">\n  <button type="button">Send</button>\n</form>'}],
+ css:[{name:'Starter colors',help:'CSS changes how HTML looks. Change the color value to experiment.',code:'body { font-family: Arial; background: #F5F6FA; }\nh1 { color: #1F4BFF; }\np { color: #0B1026; }'},{name:'A colorful card',help:'Try changing padding, border-radius, or the background color.',code:'.card {\n  background: #0B1026; color: white;\n  padding: 24px; border-radius: 16px;\n  max-width: 320px;\n}\n.card h2 { color: #00E5FF; }'},{name:'Flexbox navigation',help:'display:flex places the links in a row. Change justify-content to center or space-between.',code:'nav { display:flex; gap:12px; justify-content:space-around; background:#0B1026; padding:16px; }\na { color:white; text-decoration:none; }'}],
+ javascript:[{name:'Starter message',help:'JavaScript can react to a click. Click the button in the preview.',code:'<h2 id="message">Ready to learn?</h2>\n<button id="changeBtn">Click me</button>\n<script>\n  document.querySelector("#changeBtn").addEventListener("click", () => {\n    document.querySelector("#message").textContent = "Great work! You ran JavaScript.";\n  });\n<\/script>'},{name:'Simple counter',help:'The count variable stores a number. Each click adds one.',code:'<h2>Counter: <span id="count">0</span></h2>\n<button id="add">Add one</button>\n<script>\n  let count = 0;\n  document.querySelector("#add").addEventListener("click", () => {\n    count++;\n    document.querySelector("#count").textContent = count;\n  });\n<\/script>'},{name:'Greeting form',help:'This example reads the text input and displays a greeting.',code:'<label for="studentName">Your name</label>\n<input id="studentName" placeholder="Enter your name">\n<button id="greet">Greet me</button>\n<p id="result">Your greeting will appear here.</p>\n<script>\n  document.querySelector("#greet").addEventListener("click", () => {\n    const name = document.querySelector("#studentName").value;\n    document.querySelector("#result").textContent = name ? `Hello, ${name}!` : "Please enter your name.";\n  });\n<\/script>'}]
+};
+let currentMode='html';let currentExample=0;
+const editor=document.getElementById('code-editor');const output=document.getElementById('code-output');const runBtn=document.getElementById('run-code-btn');const message=document.getElementById('playground-message');
+function loadExample(){if(!editor)return;const ex=playgroundExamples[currentMode][currentExample];editor.value=ex.code;document.getElementById('editor-help').textContent=ex.help;document.getElementById('example-select').value=String(currentExample);if(message)message.textContent='Example loaded. Read it, make a change, and press Run code.';}
+function updateExamples(){const select=document.getElementById('example-select');if(!select)return;select.innerHTML='';playgroundExamples[currentMode].forEach((ex,i)=>{const opt=document.createElement('option');opt.value=i;opt.textContent=ex.name;select.appendChild(opt);});currentExample=0;loadExample();}
+if(editor){document.querySelectorAll('.language-tab').forEach(tab=>tab.addEventListener('click',()=>{currentMode=tab.dataset.mode;document.querySelectorAll('.language-tab').forEach(t=>t.classList.toggle('active',t===tab));updateExamples();}));document.getElementById('example-select').addEventListener('change',e=>{currentExample=Number(e.target.value);loadExample();});runBtn.addEventListener('click',()=>{const code=editor.value.trim();if(!code){message.textContent='The editor is empty. Load an example or type some code first.';message.className='status-message msg-error';output.srcdoc='';return;}let srcdoc;if(currentMode==='html')srcdoc=code;else if(currentMode==='css')srcdoc=`<!doctype html><html><head><style>body{font-family:Arial;padding:24px;background:#F5F6FA} ${code}</style></head><body><h1>CSS preview</h1><p>This paragraph helps you see text and layout styles.</p><div class="card"><h2>Example card</h2><p>Change the CSS to style this content.</p></div><button>Sample button</button></body></html>`;else srcdoc=`<!doctype html><html><head><style>body{font-family:Arial;padding:24px;background:#F5F6FA}button{padding:10px 16px;margin:6px 0}</style></head><body>${code}</body></html>`;output.srcdoc=srcdoc;message.textContent='Preview updated. Try another small change to see what happens.';message.className='status-message msg-success';});document.getElementById('reset-code-btn').addEventListener('click',loadExample);document.getElementById('clear-code-btn').addEventListener('click',()=>{editor.value='';output.srcdoc='';message.textContent='Editor cleared. Start typing whenever you are ready.';message.className='status-message';});updateExamples();}
+
+// Quizzes: each language has a knowledge check; each submission updates its latest saved result.
+const quizBank={
+ html:{title:'HTML Knowledge Check',questions:[['What is the purpose of HTML?',['To structure webpage content','To store passwords','To edit photos','To connect to Wi-Fi'],0,'HTML describes the structure and meaning of webpage content.'],['Which tag is the main page heading?',['<head>','<h1>','<p>','<title>'],1,'The h1 element is the top-level heading for the page.'],['Which attribute gives an image its source file?',['href','alt','src','class'],2,'The src attribute points to the image file.'],['Which element creates a hyperlink?',['<a>','<link>','<button>','<nav>'],0,'The a element creates a hyperlink using href.'],['Where does visible page content usually go?',['<head>','<meta>','<body>','<title>'],2,'The body contains the content displayed in the browser.'],['Which element creates a bullet list?',['<ol>','<ul>','<li>','<list>'],1,'ul creates an unordered, bulleted list.']]},
+ css:{title:'CSS Knowledge Check',questions:[['What does CSS control?',['Page structure','Page presentation and layout','Database records','Internet speed'],1,'CSS controls visual presentation such as color, spacing, and layout.'],['Which selector targets a class named card?',['#card','.card','card()','@card'],1,'A class selector begins with a dot.'],['Which property changes text color?',['background','font-style','color','text-size'],2,'The color property sets the foreground text color.'],['What does padding control?',['Space inside an element border','Space outside an element','Text spelling','Page title'],0,'Padding is the space between content and border.'],['Which layout system is useful for rows and columns?',['Alert','CSS Grid','Prompt','Console'],1,'CSS Grid is designed for two-dimensional row and column layouts.'],['Which rule applies styles at a screen-width condition?',['@media','@screen','@width','@responsive'],0,'A media query applies styles based on device or viewport conditions.']]},
+ javascript:{title:'JavaScript Knowledge Check',questions:[['What is JavaScript commonly used for on webpages?',['Adding interactivity','Writing image files','Replacing HTML entirely','Changing monitor brightness'],0,'JavaScript can respond to events and update page content.'],['Which keyword declares a variable that should not be reassigned?',['let','var','const','static'],2,'const creates a binding that cannot be reassigned.'],['Which operator checks strict equality?',['=','==','===','=>'],2,'=== compares values without type coercion.'],['What does a function help you do?',['Repeat or reuse a block of instructions','Style a heading','Create an image file','Open a browser tab automatically'],0,'Functions group reusable instructions.'],['Which method listens for a click event?',['querySelector','addEventListener','textContent','getItem'],1,'addEventListener attaches a handler for an event.'],['Which array index is the first item?',['1','-1','0','2'],2,'JavaScript arrays use zero-based indexing.']]}
+};
+const activityList=document.getElementById('activity-list');const activityView=document.getElementById('activity-view');
+function renderQuizCards(){if(!activityList)return;activityList.innerHTML='';Object.entries(quizBank).forEach(([key,quiz])=>{const latest=quizScores().find(s=>s.id===key);const card=document.createElement('article');card.className='quiz-choice-card';card.innerHTML=`<span class="tag">${languageNames[key]}</span><h2>${quiz.title}</h2><p>${quiz.questions.length} questions · Multiple choice · Instant feedback</p><p class="quiz-latest">${latest?`Latest result: <strong>${latest.score}/${latest.total} (${latest.percent}%)</strong>`:'Not attempted yet'}</p><button type="button" class="btn-primary">${latest?'Retake quiz':'Start quiz'} →</button>`;card.querySelector('button').addEventListener('click',()=>openQuiz(key));activityList.appendChild(card);});}
+function openQuiz(key){if(!activityView)return;const quiz=quizBank[key];let answers={};let submitted=false;activityView.innerHTML=`<div class="quiz-heading"><div><span class="tag">${languageNames[key]} QUIZ</span><h2>${quiz.title}</h2><p>Choose one answer for each question. You can change your choices before submitting.</p></div><span class="quiz-count">${quiz.questions.length} questions</span></div><div class="quiz-progress-track"><div id="quiz-progress-fill" class="progress-fill"></div></div><p id="answered-count" class="muted">0 of ${quiz.questions.length} answered</p><div id="quiz-questions"></div><div class="quiz-submit-row"><button type="button" class="btn-primary" id="submit-quiz-btn">Submit answers</button><span id="quiz-feedback" role="status"></span></div>`;const holder=document.getElementById('quiz-questions');quiz.questions.forEach((q,i)=>{const block=document.createElement('fieldset');block.className='question-block';const legend=document.createElement('legend');legend.textContent=`${i+1}. ${q[0]}`;block.appendChild(legend);q[1].forEach((opt,j)=>{const label=document.createElement('label');label.className='quiz-option';const radio=document.createElement('input');radio.type='radio';radio.name='q'+i;radio.value=j;radio.addEventListener('change',()=>{answers[i]=j;document.getElementById('answered-count').textContent=`${Object.keys(answers).length} of ${quiz.questions.length} answered`;document.getElementById('quiz-progress-fill').style.width=(Object.keys(answers).length/quiz.questions.length*100)+'%';});label.append(radio,document.createTextNode(' '+opt));block.appendChild(label);});const explain=document.createElement('p');explain.className='answer-explanation';explain.id='explain-'+i;block.appendChild(explain);holder.appendChild(block);});document.getElementById('submit-quiz-btn').addEventListener('click',()=>{if(submitted)return;const unanswered=quiz.questions.length-Object.keys(answers).length;if(unanswered){document.getElementById('quiz-feedback').textContent=`Please answer all ${unanswered} remaining question(s) before submitting.`;return;}let score=0;quiz.questions.forEach((q,i)=>{const correct=answers[i]===q[2];if(correct)score++;const block=holder.children[i];block.classList.add(correct?'answer-correct':'answer-incorrect');block.querySelectorAll('input').forEach(input=>{input.disabled=true;if(Number(input.value)===q[2])input.parentElement.classList.add('correct-option');else if(input.checked)input.parentElement.classList.add('wrong-option');});document.getElementById('explain-'+i).textContent=(correct?'Correct. ':'Review: ')+q[4];});const total=quiz.questions.length;const percent=Math.round(score/total*100);const scores=quizScores();const existing=scores.findIndex(s=>s.id===key);const entry={id:key,title:quiz.title,language:key,score,total,percent,completedAt:new Date().toISOString()};if(existing>=0)scores[existing]=entry;else scores.push(entry);write(STORE.scores,scores);submitted=true;document.getElementById('submit-quiz-btn').disabled=true;document.getElementById('quiz-feedback').innerHTML=`<strong>Result: ${score}/${total} (${percent}%).</strong> Your latest result has been saved to your profile.`;const again=document.createElement('button');again.type='button';again.className='btn-secondary';again.textContent='Retake this quiz';again.addEventListener('click',()=>openQuiz(key));document.querySelector('.quiz-submit-row').appendChild(again);renderQuizCards();});}
+if(activityList){renderQuizCards();activityView.innerHTML='<div class="empty-state"><h2>Choose a quiz to begin</h2><p>Complete the HTML, CSS, and JavaScript knowledge checks. Your profile always shows the latest score for each subject.</p></div>';}
+
+// Student profile: display name, progress, latest quiz attempts, achievements, export and reset.
+function refreshProfile(){const completed=completedLessons();const scores=quizScores();const totalLessons=Object.values(lessonData).reduce((n,a)=>n+a.length,0);const totalDone=completed.length;const totalQuizzes=Object.keys(quizBank).length;const attempted=scores.length;const name=read(STORE.name,'CODECODE Learner');const nameEl=document.getElementById('profile-name-display');if(!nameEl)return;nameEl.textContent=name;document.getElementById('profile-stats').innerHTML=`<div class="profile-stat"><strong>${totalDone}</strong><span>Lessons completed</span></div><div class="profile-stat"><strong>${attempted}/${totalQuizzes}</strong><span>Quizzes attempted</span></div><div class="profile-stat"><strong>${scores.length?Math.round(scores.reduce((n,s)=>n+s.percent,0)/scores.length):0}%</strong><span>Average latest quiz score</span></div>`;const percent=Math.round((totalDone+attempted)/(totalLessons+totalQuizzes)*100);document.getElementById('progress-label').textContent=percent+'%';document.getElementById('progress-fill').style.width=percent+'%';document.getElementById('progress-caption').textContent=`You have completed ${totalDone} of ${totalLessons} lessons and attempted ${attempted} of ${totalQuizzes} quizzes.`;const lessonList=document.getElementById('completed-lessons-list');if(completed.length){lessonList.innerHTML='<ul class="simple-list">'+completed.map(id=>{const l=Object.values(lessonData).flat().find(x=>x[0]===id);return l?`<li>✓ ${escapeHTML(l[1])} <span>${escapeHTML(languageNames[id.split('-')[0]]||'')}</span></li>`:'';}).join('')+'</ul>';}else lessonList.innerHTML='<p class="empty-state">No completed lessons yet. Start with the HTML learning path.</p>';const scoreList=document.getElementById('quiz-scores-list');if(scores.length){scoreList.innerHTML='<ul class="simple-list">'+scores.map(s=>`<li><strong>${escapeHTML(s.title)}</strong><span>${s.score}/${s.total} · ${s.percent}%</span><small>Last attempted: ${new Date(s.completedAt).toLocaleString()}</small></li>`).join('')+'</ul>';}else scoreList.innerHTML='<p class="empty-state">Your quiz results will appear here after your first submission.</p>';const badges=[];if(totalDone>=1)badges.push(['🌱','First steps','Completed your first lesson.']);if(totalDone>=5)badges.push(['📘','Curious learner','Completed five lessons.']);if(totalDone>=15)badges.push(['🔥','Learning streak','Completed fifteen lessons.']);if(scores.length>=1)badges.push(['🎯','Quiz explorer','Submitted your first quiz.']);if(scores.length===3)badges.push(['🧠','Triple challenge','Attempted all three language quizzes.']);if(scores.some(s=>s.percent>=80))badges.push(['🏆','Strong result','Scored at least 80% on a quiz.']);document.getElementById('badges-list').innerHTML=badges.length?'<div class="badge-grid">'+badges.map(b=>`<div class="achievement"><span>${b[0]}</span><strong>${b[1]}</strong><small>${b[2]}</small></div>`).join('')+'</div>':'<p class="empty-state">Achievements unlock as you learn and complete quizzes.</p>';const next=document.getElementById('next-step');const nextLang=['html','css','javascript'].find(k=>!scores.some(s=>s.id===k));if(totalDone<totalLessons){const nextLesson=Object.values(lessonData).flat().find(l=>!completed.includes(l[0]));next.innerHTML=`<p>Continue with <strong>${escapeHTML(nextLesson[1])}</strong> in ${languageNames[nextLesson[0].split('-')[0]]}.</p><a class="btn-primary inline-button" href="app.html">Continue learning →</a>`;}else if(nextLang){next.innerHTML=`<p>All lessons are complete. Try the ${languageNames[nextLang]} knowledge check next.</p><a class="btn-primary inline-button" href="quizzes.html">Go to quizzes →</a>`;}else next.innerHTML='<p>Fantastic progress! You have completed all lessons and attempted all three quizzes. Keep practicing in the playground.</p><a class="btn-primary inline-button" href="playground.html">Open playground →</a>';}
+const editName=document.getElementById('edit-name-btn');if(editName)editName.addEventListener('click',()=>{const current=read(STORE.name,'CODECODE Learner');const name=prompt('What name should appear on your learner card?',current);if(name!==null&&name.trim()){write(STORE.name,name.trim().slice(0,32));refreshProfile();}});
+const exportBtn=document.getElementById('export-progress-btn');if(exportBtn)exportBtn.addEventListener('click',()=>{const data={studentName:read(STORE.name,'CODECODE Learner'),exportedAt:new Date().toISOString(),completedLessons:completedLessons(),latestQuizResults:quizScores()};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='codecode-progress.json';a.click();URL.revokeObjectURL(url);document.getElementById('profile-message').textContent='Your progress file has been prepared.';});
+const resetBtn=document.getElementById('reset-progress-btn');if(resetBtn)resetBtn.addEventListener('click',()=>{if(confirm('Reset completed lessons and quiz results on this browser? This cannot be undone.')){write(STORE.lessons,[]);write(STORE.scores,[]);refreshProfile();document.getElementById('profile-message').textContent='Your learning progress has been reset.';}});
+if(document.getElementById('profile-name-display'))refreshProfile();
